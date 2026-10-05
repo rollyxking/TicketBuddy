@@ -15,11 +15,59 @@ function readTicketOrders(email) {
   }
 }
 
+function eventDateKey(dateText) {
+  const match = dateText.match(/·\s*([A-Z][a-z]{2})\s+(\d{2})\s*·/);
+  if (!match) return "";
+  const months = { Jan: "01", Feb: "02", Mar: "03", Apr: "04", May: "05", Jun: "06", Jul: "07", Aug: "08", Sep: "09", Oct: "10", Nov: "11", Dec: "12" };
+  return months[match[1]] ? `2026-${months[match[1]]}-${match[2]}` : "";
+}
+
+function matchesDateFilter(event, filter, selectedDate) {
+  if (!filter || (filter === "date" && !selectedDate)) return true;
+  const key = eventDateKey(event.date);
+  if (!key) return false;
+  if (filter === "date") return key === selectedDate;
+
+  const eventDate = new Date(`${key}T12:00:00`);
+  const start = new Date();
+  start.setHours(0, 0, 0, 0);
+  if (filter === "today") return eventDate.getTime() === start.getTime();
+
+  const mondayOffset = (start.getDay() + 6) % 7;
+  start.setDate(start.getDate() - mondayOffset);
+  const endOfWeek = new Date(start);
+  endOfWeek.setDate(endOfWeek.getDate() + 7);
+  if (filter === "week") return eventDate >= start && eventDate < endOfWeek;
+  if (filter === "weekend") {
+    const saturday = new Date(start);
+    saturday.setDate(saturday.getDate() + 5);
+    return eventDate >= saturday && eventDate < endOfWeek;
+  }
+  return true;
+}
+
 function Header({ registeredUser }) {
   const nav = useNavigate();
   const [bar, setBar] = useState(true);
-  const [f, setF] = useState({ loc: "", text: "" });
-  const go = (e) => { e.preventDefault(); const p = new URLSearchParams(); if (f.text) p.set("q", f.text); if (f.loc) p.set("city", f.loc); nav(`/search?${p}`); };
+  const [f, setF] = useState({ loc: "", text: "", date: "", on: "" });
+  const [suggestionsOpen, setSuggestionsOpen] = useState(false);
+  const searchText = f.text.trim().toLowerCase();
+  const suggestions = searchText
+    ? [
+      ...events.filter((event) => (event.title + event.venue + event.city).toLowerCase().includes(searchText)).map((event) => ({ name: event.title, detail: `${event.venue} · ${event.city}`, eventId: event.id })),
+      ...trending.filter(([, name]) => name.toLowerCase().includes(searchText)).map(([category, name]) => ({ name, detail: category })),
+    ].slice(0, 6)
+    : trending.slice(0, 4).map(([category, name]) => ({ name, detail: category }));
+  const go = (e) => {
+    e.preventDefault();
+    const p = new URLSearchParams();
+    if (f.text.trim()) p.set("q", f.text.trim());
+    if (f.loc.trim()) p.set("city", f.loc.trim());
+    if (f.date) p.set("date", f.date);
+    if (f.date === "date" && f.on) p.set("on", f.on);
+    setSuggestionsOpen(false);
+    nav(`/search?${p}`);
+  };
   const items = [["Concerts", "/search?cat=Concerts"], ["Sports", "/search?cat=Sports"], ["Arts, Theater & Comedy", `/search?cat=${encodeURIComponent("Arts, Theater & Comedy")}`], ["Family", "/search?cat=Family"], ["Cities", "/#cities"]];
   return (
     <>
@@ -37,8 +85,19 @@ function Header({ registeredUser }) {
       {bar && (
         <div className="sbar"><form className="wrap sform" role="search" onSubmit={go}>
           <label className="fld"><span>Location</span><input placeholder="City or Zip Code" value={f.loc} onChange={(e) => setF({ ...f, loc: e.target.value })} /></label>
-          <button type="button" className="fld dates"><span>Dates</span>All Dates ▾</button>
-          <label className="fld grow"><span>Search</span><input type="search" maxLength={120} placeholder="Artist, Event or Venue" value={f.text} onChange={(e) => setF({ ...f, text: e.target.value })} /></label>
+          <label className="fld dates"><span>Dates</span><select aria-label="Date range" value={f.date} onChange={(e) => setF({ ...f, date: e.target.value, on: "" })}>
+            <option value="">All dates</option><option value="today">Today</option><option value="week">This week</option><option value="weekend">This weekend</option><option value="date">Choose a date</option>
+          </select>{f.date === "date" && <input aria-label="Choose a date" type="date" value={f.on} onChange={(e) => setF({ ...f, on: e.target.value })} />}</label>
+          <div className="fld grow search-query" onClick={(e) => { if (!e.target.closest(".search-suggestion")) setSuggestionsOpen(true); }} onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setSuggestionsOpen(false); }}>
+            <label htmlFor="event-search">Search</label>
+            <input id="event-search" type="search" role="combobox" aria-autocomplete="list" aria-controls="event-search-suggestions" aria-expanded={suggestionsOpen} maxLength={120} placeholder="Artist, Event or Venue" value={f.text} onFocus={() => setSuggestionsOpen(true)} onChange={(e) => { setF({ ...f, text: e.target.value }); setSuggestionsOpen(true); }} />
+            {suggestionsOpen && <div id="event-search-suggestions" className="search-suggestions" role="listbox" aria-label="Search suggestions">
+              <p className="suggestion-heading">{searchText ? "Matching events and artists" : "Trending searches"}</p>
+              {suggestions.map((suggestion) => <Link key={`${suggestion.name}-${suggestion.eventId || "search"}`} role="option" to={suggestion.eventId ? `/event/${suggestion.eventId}` : q(suggestion.name)} className="search-suggestion" onClick={() => setSuggestionsOpen(false)}><span>{suggestion.name}</span><small>{suggestion.detail}</small></Link>)}
+              {!suggestions.length && <p className="suggestion-empty">No matches yet. Press Search to see results.</p>}
+              {searchText && <Link className="suggestion-all" to={q(f.text.trim())} onClick={() => setSuggestionsOpen(false)}>Search all for “{f.text.trim()}”</Link>}
+            </div>}
+          </div>
           <button className="btn go">Search</button>
         </form></div>
       )}
@@ -100,13 +159,21 @@ function Home() {
 function Search() {
   const [p, setP] = useSearchParams();
   const t = (p.get("q") || "").toLowerCase(), cat = p.get("cat") || "", city = (p.get("city") || "").toLowerCase();
-  const set = (k, v) => { const n = new URLSearchParams(p); v ? n.set(k, v) : n.delete(k); setP(n); };
-  const list = events.filter((e) => (!t || (e.title + e.venue + e.city).toLowerCase().includes(t)) && (!cat || e.cat === cat) && (!city || e.city.toLowerCase().includes(city)));
+  const dateFilter = p.get("date") || "", selectedDate = p.get("on") || "";
+  const set = (k, v) => {
+    const n = new URLSearchParams(p);
+    v ? n.set(k, v) : n.delete(k);
+    if (k === "date" && v !== "date") n.delete("on");
+    setP(n);
+  };
+  const list = events.filter((e) => (!t || (e.title + e.venue + e.city).toLowerCase().includes(t)) && (!cat || e.cat === cat) && (!city || e.city.toLowerCase().includes(city)) && matchesDateFilter(e, dateFilter, selectedDate));
   return (
     <div className="wrap">
       <h2>{list.length} events</h2>
       <div className="filters">
         <select value={cat} onChange={(e) => set("cat", e.target.value)} aria-label="Category"><option value="">All categories</option>{categories.map((c) => <option key={c}>{c}</option>)}</select>
+        <select value={dateFilter} onChange={(e) => set("date", e.target.value)} aria-label="Date range"><option value="">All dates</option><option value="today">Today</option><option value="week">This week</option><option value="weekend">This weekend</option><option value="date">Choose a date</option></select>
+        {dateFilter === "date" && <label className="date-inline"><span>On</span><input type="date" aria-label="Choose a date" value={selectedDate} onChange={(e) => set("on", e.target.value)} /></label>}
       </div>
       {list.length ? <div className="grid">{list.map((e) => (
         <Link key={e.id} to={`/event/${e.id}`} className="tile"><div className="im" style={{ background: e.art }}>{e.image && <img className="tile-image" src={e.image} alt="" loading="lazy" />}</div><div className="tb"><div className="mute">{e.date}</div><h3>{e.title}</h3><div className="mute">{e.venue} • {e.city}</div></div></Link>
