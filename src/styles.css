@@ -82,9 +82,18 @@ h2{font-size:22px;margin:36px 0 14px}
 .car{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:none}
 .tile{flex:0 0 250px;scroll-snap-align:start;background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden}
 .tile:hover{border-color:var(--accent)}.tile.wide{flex-basis:300px}
+.presales .sh{gap:16px;flex-wrap:wrap}
+.presale-near{display:flex;align-items:center;gap:10px;color:var(--mute);font-size:13px}
+.presale-near select{min-width:180px;padding:9px 34px 9px 12px;border:1px solid var(--line);border-radius:5px;background:var(--panel);color:var(--text);font:inherit;color-scheme:dark}
+.presale-card{flex-basis:360px}
+.presale-card .im{height:202px}
+.presale-card .tb h3{min-height:40px}
+.presale-sponsor{display:flex;align-items:center;gap:12px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.presale-sponsor img{width:48px;height:28px;object-fit:contain}
+.presale-sponsor span{display:grid;gap:3px;font-size:12px}
+.presale-sponsor small{color:var(--mute);font-size:11px}
 .im{height:140px;position:relative}.tb{padding:12px 14px}.tb h3{margin:4px 0;font-size:16px}.tb p{margin:6px 0}
 .badge{position:absolute;left:10px;bottom:10px;background:#000c;color:var(--accent);font-size:12px;padding:3px 8px;border-radius:4px}
-.presale{color:var(--accent)}
 .hl{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-top:24px}
 .promo{display:block;position:relative;border-radius:10px;overflow:hidden;background:var(--panel)}
 .promo .im{height:340px}.promo-image,.tile-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.promo h1{margin:0;padding:14px 18px;font-size:26px}
@@ -177,4 +186,4 @@ main:has(.auth-page){margin:0}
 .dashboard-empty p{margin:0;color:var(--mute)}
 .dashboard-empty .btn{margin-top:14px}
 .purchase-confirmation .btn{margin-top:0}
-@media(max-width:600px){.dashboard{padding-top:36px}.dashboard-heading{align-items:flex-start;flex-direction:column}.dashboard-heading h1{font-size:28px}.dashboard-actions{width:100%;flex-wrap:wrap}.dashboard-profile{margin-top:32px;padding:24px}.dashboard-details{grid-template-columns:1fr}.dashboard-orders{margin-top:36px}.dashboard-order{grid-template-columns:56px minmax(0,1fr);gap:12px;padding:12px}.dashboard-order-art{width:56px;height:56px}.dashboard-order-total{grid-column:2;display:flex;align-items:center;justify-content:space-between}.dashboard-section-heading{align-items:flex-start}}
+@media(max-width:600px){.dashboard{padding-top:36px}.dashboard-heading{align-items:flex-start;flex-direction:column}.dashboard-heading h1{font-size:28px}.dashboard-actions{width:100%;flex-wrap:wrap}.dashboard-profile{margin-top:32px;padding:24px}.dashboard-details{grid-template-columns:1fr}.dashboard-orders{margin-top:36px}.dashboard-order{grid-template-columns:56px minmax(0,1fr);gap:12px;padding:12px}.dashboard-order-art{width:56px;height:56px}.dashboard-order-total{grid-column:2;display:flex;align-items:center;justify-content:space-between}.dashboard-section-heading{align-items:flex-start}.presale-card{flex-basis:min(86vw,360px)}.presale-card .im{height:auto;aspect-ratio:16 / 9}.presale-near{width:100%;justify-content:space-between}.presale-near select{flex:1;max-width:230px}}

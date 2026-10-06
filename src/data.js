@@ -176,15 +176,40 @@ export const popular = {
   Family: pairs("Ice Shows|Disney On Ice presents Find Your Hero;Alternative Rock|Coachella Valley Music and Arts Festival;Bullriding|PBR: Unleash the Beast;Other|Westminster Kennel Club Dog Show;Bullriding|PBR: Unleash the Beast;Rodeo|San Antonio Stock Show and Rodeo;Rodeo|The Hondo Rodeo Fest;Ice Shows|Disney On Ice presents Magic in the Stars;Other|Harlem Globetrotters;Ice Shows|Disney On Ice presents Spotlight Magic!"),
 };
 export const spotlights = pairs("Meet & Greets, Special Access and more|Browse Available VIP Packages;NOW PLAYING|ROLLING LOUD: THE MOVIE;Undefined|Disney Worlds Collide Concert Tour;Rock|Pentatonix");
-export const presales = [
-  ["Wed · May 12 · 8:00 PM", "Slash feat. Myles Kennedy & The Conspirators", "New York, NY • Beacon Theatre", "Tue · Oct 06 · 10:00 AM"],
-  ["Tue · May 04 · 8:00 PM", "Dylan Gossett - The Ramblin' Tour 2027", "Indianapolis, IN • Old National Centre", "Mon · Oct 05 · 12:00 PM"],
-  ["Fri · Feb 12 · 7:00 PM", "Chelsea Cutler - IS THIS THE END? Tour", "Brooklyn, NY • Brooklyn Paramount", "Tue · Oct 06 · 10:00 AM"],
-];
 export const guides = pairs("NBA Basketball Tickets|See your favorite team hit the court and get tickets for the new season.;NHL Hockey Tickets|Be there live when your favorite team hits the ice.;MLS Soccer Tickets|Catch every action-packed game this season.;MLB Baseball Tickets|Answers to your questions about the 2026 MLB season, including how to get tickets.;Broadway Tickets|Browse Broadway tickets and discover upcoming shows.");
 export const discover = pairs("General Info|All In Prices Explained|Here's what you need to know about All In Prices, and why there are fees on top of the ticket price.;Ticket Tips|What to Bring to a Concert|Read our ultimate packing checklist before you go to your next show.;Sports|MLS 2026 Season FAQs|Get ready for your next match with our 2026 MLS guide.;General Info|Get the Most Out of Your Account|Learn what's possible with this guide of ticket tips and info.;Sports|A Look at the 2026 MLB Schedule and New Rules|MLB's 2026 season is bringing big schedule changes and new rules. Here's what fans need to know before first pitch.;Local Guide|6 Broadway Shows to See This Fall in NYC|Need ideas for family activities in NYC this fall? Here are the best Broadway shows and musicals to see in 2026.");
 export const cities = ["New York City", "Los Angeles", "Las Vegas", "Chicago", "Atlanta", "Nashville", "Denver", "Miami"];
 export const featured = ["Hotels", "Ticket Deals", "VIP Packages", "Sell on TicketBubby"];
+
+export const presales = [
+  {
+    title: "STRANGERS, FRIENDS, AND LOVERS: A NIGHT OUT WITH ESTHER PEREL",
+    date: "Sun · May 02 · 7:00 PM",
+    city: "Boston, MA",
+    venue: "MGM Music Hall at Fenway",
+    presaleStart: "Tue · Oct 06 · 10:00 AM",
+    image: "https://s1.ticketm.net/dam/a/b18/1551dcb7-9235-4a62-92f2-96eb8dbffb18_RETINA_PORTRAIT_16_9.jpg?width=720&height=405&fit=cover&optimize=high&auto=webp",
+    href: "https://www.ticketmaster.com/strangers-friends-and-lovers-a-night-boston-massachusetts-05-02-2027/event/01006541CDA2B318",
+  },
+  {
+    title: "Warren Zeiders: No Brakes Tour",
+    date: "Thu · Apr 22 · 7:30 PM",
+    city: "Philadelphia, PA",
+    venue: "The Met Presented by Highmark",
+    presaleStart: "Tue · Oct 06 · 10:00 AM",
+    image: "https://s1.ticketm.net/dam/a/9e0/a1e35d95-ffa9-4b54-906c-a82f0c9a49e0_RETINA_PORTRAIT_16_9.jpg?width=720&height=405&fit=cover&optimize=high&auto=webp",
+    href: "https://www.ticketmaster.com/warren-zeiders-no-brakes-tour-philadelphia-pennsylvania-04-22-2027/event/0200653DC346439C",
+  },
+  {
+    title: "LIL WAYNE: 20 YEARS OF CARTER CLASSICS",
+    date: "Sat · Dec 05 · 7:00 PM",
+    city: "Savannah, GA",
+    venue: "Enmarket Arena",
+    presaleStart: "Wed · Oct 07 · 10:00 AM",
+    image: "https://s1.ticketm.net/dam/a/feb/da63459e-8148-453b-8863-e464f25acfeb_RETINA_PORTRAIT_16_9.jpg?width=720&height=405&fit=cover&optimize=high&auto=webp",
+    href: "https://www.ticketmaster.com/lil-wayne-20-years-of-carter-savannah-georgia-12-05-2026/event/0E00652A99D38572",
+  },
+];
 export const footerCols = {
   "Helpful Links": ["Help/FAQ", "Sell", "My Account", "Contact Us", "Gift Cards", "Do Not Sell or Share My Personal Information", "Get Started on TicketBubby"],
   "Our Network": ["Venues", "Promoters", "Festivals", "Box Offices", "Universe", "NFL", "NBA", "NHL"],

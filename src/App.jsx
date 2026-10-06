@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Routes, Route, Link, Navigate, useNavigate, useParams, useSearchParams, useLocation } from "react-router-dom";
-import { categories, events, art, trending, popular, spotlights, presales, guides, discover, cities, featured, footerCols, homeImages } from "./data.js";
+import { categories, events, art, trending, popular, spotlights, guides, discover, cities, featured, footerCols, homeImages, presales } from "./data.js";
 
 const q = (s) => `/search?q=${encodeURIComponent(s)}`;
 const accountStorageKey = "stagekit.registeredUser";
@@ -117,12 +117,17 @@ function Carousel({ title, children, seeAll, id }) {
     </section>
   );
 }
-const Tile = ({ to, tag, name, tall, image, loading = "lazy" }) => (
-  <Link to={to} className={"tile" + (tall ? " tall" : "")}><div className="im" style={{ background: art(name) }}>{image && <img className="tile-image" src={image} alt="" loading={loading} />}</div><div className="tb">{tag && <span className="tag">{tag}</span>}<h3>{name}</h3></div></Link>
-);
+const Tile = ({ to, tag, name, tall, image, loading = "lazy", href, action }) => {
+  const className = "tile" + (tall ? " tall" : "");
+  const content = <><div className="im" style={{ background: art(name) }}>{image && <img className="tile-image" src={image} alt="" loading={loading} />}</div><div className="tb">{tag && <span className="tag">{tag}</span>}<h3>{name}</h3>{action && <span className="tile-action">{action}</span>}</div></>;
+  return href ? <a href={href} className={className}>{content}</a> : <Link to={to} className={className}>{content}</Link>;
+};
 
 function Home() {
   const hero = "Disney On Ice presents Jump In!";
+  const [presaleLocation, setPresaleLocation] = useState("");
+  const presaleLocations = [...new Set(presales.map((event) => event.city))].sort();
+  const filteredPresales = presales.filter((event) => !presaleLocation || event.city === presaleLocation);
   return (
     <div className="wrap">
       <section className="hl">
@@ -138,16 +143,49 @@ function Home() {
           </Link>
         ))}
       </Carousel>
-      <Carousel title="Sponsored Presales and Offers">
-        {presales.map(([d, t, v, s]) => (
-          <Link key={t} to={q(t)} className="tile wide"><div className="im" style={{ background: art(t) }}><span className="badge">Presale</span></div>
-            <div className="tb"><div className="mute">{d}</div><h3>{t}</h3><div className="mute">{v}</div><div className="mute presale">Presale starts {s}</div></div></Link>
-        ))}
-      </Carousel>
+      <section className="sec presales" id="sponsorship-presales">
+        <div className="sh">
+          <h2>Sponsored Presales and Offers</h2>
+          <label className="presale-near"><span>Near</span><select aria-label="Filter presales by location" value={presaleLocation} onChange={(event) => setPresaleLocation(event.target.value)}>
+            <option value="">Select your location</option>
+            {presaleLocations.map((city) => <option key={city} value={city}>{city}</option>)}
+          </select></label>
+        </div>
+        {filteredPresales.length ? (
+          <div className="car">
+            {filteredPresales.map((event) => (
+              <a key={event.title} href={event.href} className="tile wide presale-card">
+                <div className="im" style={{ background: art(event.title) }}><img className="tile-image" src={event.image} alt="" loading="eager" /><span className="badge">Presale</span></div>
+                <div className="tb">
+                  <div className="mute">{event.date}</div>
+                  <h3>{event.title}</h3>
+                  <div className="mute">{event.city} · {event.venue}</div>
+                  <div className="presale-sponsor"><img src={homeImages.payments.Citi} alt="Citi" loading="lazy" /><span><strong>Citi presale</strong><small>Starts {event.presaleStart}</small></span></div>
+                </div>
+              </a>
+            ))}
+          </div>
+        ) : <p className="mute">No presales are available near {presaleLocation}.</p>}
+      </section>
       <h2 className="pn">Popular Near You</h2>
       {Object.entries(popular).map(([cat, list]) => (
-        <Carousel key={cat} title={cat} seeAll={`/search?cat=${encodeURIComponent(cat)}`}>{list.map(([g, n], i) => <Tile key={n + i} to={q(n)} tag={g} name={n} image={homeImages.popular[cat]?.[i]} loading={i < 2 ? "eager" : "lazy"} />)}</Carousel>
-      ))}
+  <Carousel
+    key={cat}
+    title={cat}
+    seeAll={`/search?cat=${encodeURIComponent(cat)}`}
+  >
+    {list.map(([g, n], i) => (
+      <Tile
+        key={n + i}
+        to={q(n)}
+        tag={g}
+        name={n}
+        image={homeImages.popular[cat]?.[i]}
+        loading={i < 2 ? "eager" : "lazy"}
+      />
+    ))}
+  </Carousel>
+))}
       <Carousel title="Entertainment Guides">{guides.map(([t, d], i) => <Link key={t} to={q(t)} className="tile"><div className="im" style={{ background: art(t) }}><img className="tile-image" src={homeImages.guides[i]} alt="" loading="lazy" /></div><div className="tb"><h3>{t}</h3><p className="mute">{d}</p></div></Link>)}</Carousel>
       <Carousel title="Discover More">{discover.map(([g, t, d], i) => <Link key={t} to="/" className="tile"><div className="im" style={{ background: art(t) }}><img className="tile-image" src={homeImages.discover[i]} alt="" loading="lazy" /></div><div className="tb"><span className="tag">{g}</span><h3>{t}</h3><p className="mute">{d}</p><span className="tag">Discover More</span></div></Link>)}</Carousel>
       <Carousel title="Popular Cities" seeAll="/search" id="cities">{cities.map((c) => <Tile key={c} to={q(c)} name={c} image={homeImages.cities[c]} />)}</Carousel>
