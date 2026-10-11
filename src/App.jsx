@@ -1,10 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Routes, Route, Link, Navigate, useNavigate, useParams, useSearchParams, useLocation } from "react-router-dom";
-<<<<<<< HEAD
 import { categories, events, art, trending, popular, spotlights, guides, discover, cities, featured, footerCols, homeImages, presales } from "./data.js";
-=======
-import { categories, events, art, trending, popular, spotlights, guides, discover, cities, featured, footerCols, homeImages } from "./data.js";
->>>>>>> 7cf12a4 (Rename to TicketBuddy, link Oasis to Vercel site, Oasis first)
 
 const OASIS_URL = "https://ticketsbuddy.vercel.app/";
 const q = (s) => (s.trim().toLowerCase() === "oasis" ? OASIS_URL : `/search?q=${encodeURIComponent(s)}`);
@@ -126,17 +122,11 @@ function Carousel({ title, children, seeAll, id }) {
     </section>
   );
 }
-<<<<<<< HEAD
 const Tile = ({ to, tag, name, tall, image, loading = "lazy", href, action }) => {
   const className = "tile" + (tall ? " tall" : "");
   const content = <><div className="im" style={{ background: art(name) }}>{image && <img className="tile-image" src={image} alt="" loading={loading} />}</div><div className="tb">{tag && <span className="tag">{tag}</span>}<h3>{name}</h3>{action && <span className="tile-action">{action}</span>}</div></>;
-  return href ? <a href={href} className={className}>{content}</a> : <Link to={to} className={className}>{content}</Link>;
+  return href ? <a href={href} className={className}>{content}</a> : <AppLink to={to} className={className}>{content}</AppLink>;
 };
-=======
-const Tile = ({ to, tag, name, tall, image, loading = "lazy" }) => (
-  <AppLink to={to} className={"tile" + (tall ? " tall" : "")}><div className="im" style={{ background: art(name) }}>{image && <img className="tile-image" src={image} alt="" loading={loading} />}</div><div className="tb">{tag && <span className="tag">{tag}</span>}<h3>{name}</h3></div></AppLink>
-);
->>>>>>> 7cf12a4 (Rename to TicketBuddy, link Oasis to Vercel site, Oasis first)
 
 function Home() {
   const hero = "Disney On Ice presents Jump In!";
@@ -158,7 +148,6 @@ function Home() {
           </Link>
         ))}
       </Carousel>
-<<<<<<< HEAD
       <section className="sec presales" id="sponsorship-presales">
         <div className="sh">
           <h2>Sponsored Presales and Offers</h2>
@@ -183,27 +172,10 @@ function Home() {
           </div>
         ) : <p className="mute">No presales are available near {presaleLocation}.</p>}
       </section>
-=======
->>>>>>> 7cf12a4 (Rename to TicketBuddy, link Oasis to Vercel site, Oasis first)
       <h2 className="pn">Popular Near You</h2>
       {Object.entries(popular).map(([cat, list]) => (
-  <Carousel
-    key={cat}
-    title={cat}
-    seeAll={`/search?cat=${encodeURIComponent(cat)}`}
-  >
-    {list.map(([g, n], i) => (
-      <Tile
-        key={n + i}
-        to={q(n)}
-        tag={g}
-        name={n}
-        image={homeImages.popular[cat]?.[i]}
-        loading={i < 2 ? "eager" : "lazy"}
-      />
-    ))}
-  </Carousel>
-))}
+        <Carousel key={cat} title={cat} seeAll={`/search?cat=${encodeURIComponent(cat)}`}>{list.map(([g, n], i) => <Tile key={n + i} to={q(n)} tag={g} name={n} image={homeImages.popular[cat]?.[i]} loading={i < 2 ? "eager" : "lazy"} />)}</Carousel>
+      ))}
       <Carousel title="Entertainment Guides">{guides.map(([t, d], i) => <Link key={t} to={q(t)} className="tile"><div className="im" style={{ background: art(t) }}><img className="tile-image" src={homeImages.guides[i]} alt="" loading="lazy" /></div><div className="tb"><h3>{t}</h3><p className="mute">{d}</p></div></Link>)}</Carousel>
       <Carousel title="Discover More">{discover.map(([g, t, d], i) => <Link key={t} to="/" className="tile"><div className="im" style={{ background: art(t) }}><img className="tile-image" src={homeImages.discover[i]} alt="" loading="lazy" /></div><div className="tb"><span className="tag">{g}</span><h3>{t}</h3><p className="mute">{d}</p><span className="tag">Discover More</span></div></Link>)}</Carousel>
       <Carousel title="Popular Cities" seeAll="/search" id="cities">{cities.map((c) => <Tile key={c} to={q(c)} name={c} image={homeImages.cities[c]} />)}</Carousel>
