@@ -162,7 +162,13 @@ Polo & Pan - Americas Tour Block Party - Ages 21+|The Midway|San Francisco, CA|S
 Ed Sheeran: LOOP Tour|Lucas Oil Stadium|Indianapolis, IN|Sat · Oct 10 · 5:30 PM|Concerts
 Luke Bryan: Word On The Street Tour|White River Amphitheatre|Auburn, WA|Sat · Oct 10 · 7:00 PM|Concerts
 49 Winchester (16 and Over)|Gothic Theatre|Englewood, CO|Sat · Oct 10 · 8:00 PM|Concerts
-Limp Bizkit|The Truth|Nashville, TN|Sun · Oct 11 · 8:00 PM|Concerts`;
+Limp Bizkit|The Truth|Nashville, TN|Sun · Oct 11 · 8:00 PM|Concerts
+London Symphony Orchestra: Autumn Gala|Barbican Centre|London, UK|Sat · Oct 10 · 7:30 PM|Arts, Theater & Comedy
+Manchester Comedy Night Live|Albert Hall|Manchester, UK|Sat · Oct 10 · 8:00 PM|Arts, Theater & Comedy
+Indie Rock Showcase|O2 Academy Birmingham|Birmingham, UK|Sun · Oct 11 · 7:00 PM|Concerts
+Merseyside Family Fun Day|M&S Bank Arena|Liverpool, UK|Sun · Oct 11 · 1:00 PM|Family
+Edinburgh Folk Sessions|Usher Hall|Edinburgh, UK|Sun · Oct 11 · 7:30 PM|Concerts
+Glasgow Derby Night|Hampden Park|Glasgow, UK|Mon · Oct 12 · 7:45 PM|Sports`;
 export const events = week.split("\n").map((l, i) => {
   const [title, venue, city, date, cat] = l.split("|");
   return { id: i + 1, title, venue, city, date, cat, price: 20 + ((i * 7) % 60), art: art(title), image: homeImages.events[title] };
@@ -179,7 +185,11 @@ export const popular = {
 export const spotlights = pairs("Meet & Greets, Special Access and more|Browse Available VIP Packages;NOW PLAYING|ROLLING LOUD: THE MOVIE;Undefined|Disney Worlds Collide Concert Tour;Rock|Pentatonix");
 export const guides = pairs("NBA Basketball Tickets|See your favorite team hit the court and get tickets for the new season.;NHL Hockey Tickets|Be there live when your favorite team hits the ice.;MLS Soccer Tickets|Catch every action-packed game this season.;MLB Baseball Tickets|Answers to your questions about the 2026 MLB season, including how to get tickets.;Broadway Tickets|Browse Broadway tickets and discover upcoming shows.");
 export const discover = pairs("General Info|All In Prices Explained|Here's what you need to know about All In Prices, and why there are fees on top of the ticket price.;Ticket Tips|What to Bring to a Concert|Read our ultimate packing checklist before you go to your next show.;Sports|MLS 2026 Season FAQs|Get ready for your next match with our 2026 MLS guide.;General Info|Get the Most Out of Your Account|Learn what's possible with this guide of ticket tips and info.;Sports|A Look at the 2026 MLB Schedule and New Rules|MLB's 2026 season is bringing big schedule changes and new rules. Here's what fans need to know before first pitch.;Local Guide|6 Broadway Shows to See This Fall in NYC|Need ideas for family activities in NYC this fall? Here are the best Broadway shows and musicals to see in 2026.");
-export const cities = ["New York City", "Los Angeles", "Las Vegas", "Chicago", "Atlanta", "Nashville", "Denver", "Miami"];
+export const citiesByCountry = {
+  "United States": ["New York City", "Los Angeles", "Las Vegas", "Chicago", "Atlanta", "Nashville", "Denver", "Miami"],
+  "United Kingdom": ["London", "Manchester", "Birmingham", "Liverpool", "Edinburgh", "Glasgow"],
+};
+export const cities = Object.values(citiesByCountry).flat();
 export const featured = ["Hotels", "Ticket Deals", "VIP Packages", "Sell on TicketBuddy"];
 
 export const presales = [

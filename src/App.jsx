@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Routes, Route, Link, Navigate, useNavigate, useParams, useSearchParams, useLocation } from "react-router-dom";
-import { categories, events, art, trending, popular, spotlights, guides, discover, cities, featured, footerCols, homeImages, presales } from "./data.js";
+import { categories, events, art, trending, popular, spotlights, guides, discover, cities, citiesByCountry, featured, footerCols, homeImages, presales } from "./data.js";
 
 const OASIS_URL = "https://ticketsbuddy.vercel.app/";
 const q = (s) => (s.trim().toLowerCase() === "oasis" ? OASIS_URL : `/search?q=${encodeURIComponent(s)}`);
@@ -89,7 +89,7 @@ function Header({ registeredUser }) {
       </div></nav>
       {bar && (
         <div className="sbar"><form className="wrap sform" role="search" onSubmit={go}>
-          <label className="fld"><span>Location</span><input placeholder="City or Zip Code" value={f.loc} onChange={(e) => setF({ ...f, loc: e.target.value })} /></label>
+          <label className="fld"><span>Location</span><input placeholder="City, ZIP or postcode" value={f.loc} onChange={(e) => setF({ ...f, loc: e.target.value })} /></label>
           <label className="fld dates"><span>Dates</span><select aria-label="Date range" value={f.date} onChange={(e) => setF({ ...f, date: e.target.value, on: "" })}>
             <option value="">All dates</option><option value="today">Today</option><option value="week">This week</option><option value="weekend">This weekend</option><option value="date">Choose a date</option>
           </select>{f.date === "date" && <input aria-label="Choose a date" type="date" value={f.on} onChange={(e) => setF({ ...f, on: e.target.value })} />}</label>
@@ -350,7 +350,7 @@ function SignInPage({ registeredUser, onRegister }) {
                   <label htmlFor="auth-location">Your city</label>
                   <select id="auth-location" required value={userLocation} onChange={(event) => setUserLocation(event.target.value)}>
                     <option value="">Choose a city</option>
-                    {cities.map((city) => <option key={city} value={city}>{city}</option>)}
+                    {Object.entries(citiesByCountry).map(([country, list]) => <optgroup key={country} label={country}>{list.map((city) => <option key={city} value={city}>{city}</option>)}</optgroup>)}
                   </select>
                   <label htmlFor="auth-profile-picture">Profile picture</label>
                   <input id="auth-profile-picture" type="file" accept="image/*" required onChange={chooseProfilePicture} />
