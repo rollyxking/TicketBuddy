@@ -5,6 +5,7 @@ export const art = (s) => `linear-gradient(135deg, hsl(${hue(s)} 55% 16%), hsl($
 export const homeImages = {
   hero: "https://s1.ticketm.net/dam/a/abe/98126acc-e812-4b18-beff-d0c28f09babe_TABLET_LANDSCAPE_LARGE_16_9.jpg?fit=cover&optimize=high&auto=webp",
   trending: {
+    Oasis: "https://s1.ticketm.net/dam/a/f3b/4e5c700e-50bb-4b8c-9673-9e4f9f2bef3b_RETINA_PORTRAIT_16_9.jpg?width=720&height=405&fit=cover&optimize=high&auto=webp",
     "Olivia Rodrigo": "https://s1.ticketm.net/dam/a/4e1/ca96dd03-8def-46ae-b6d3-9441e992c4e1_TABLET_LANDSCAPE_LARGE_16_9.jpg?width=720&height=405&fit=cover&optimize=high&auto=webp",
     "Steve Lacy": "https://s1.ticketm.net/dam/a/736/9b65a2e3-c29e-4710-97b1-a60425077736_TABLET_LANDSCAPE_LARGE_16_9.jpg?width=720&height=405&fit=cover&optimize=high&auto=webp",
     "Harry Styles": "https://s1.ticketm.net/dam/a/2c8/8b6d9420-66c7-4bcb-877b-0ff0238da2c8_RETINA_PORTRAIT_16_9.jpg?width=720&height=405&fit=cover&optimize=high&auto=webp",
@@ -168,7 +169,7 @@ export const events = week.split("\n").map((l, i) => {
 });
 
 const pairs = (s) => s.split(";").map((x) => x.split("|"));
-export const trending = pairs("Pop|Olivia Rodrigo;R&B|Steve Lacy;Pop|Harry Styles;Hip-Hop/Rap|Doja Cat;Pop|Jonas Brothers;Football|Dallas Cowboys;Rock|Journey;Wrestling|WWE;Rock|RUSH;Hockey|New York Rangers");
+export const trending = pairs("Rock|Oasis;Pop|Olivia Rodrigo;R&B|Steve Lacy;Pop|Harry Styles;Hip-Hop/Rap|Doja Cat;Pop|Jonas Brothers;Football|Dallas Cowboys;Rock|Journey;Wrestling|WWE;Rock|RUSH;Hockey|New York Rangers");
 export const popular = {
   Concerts: pairs("Rock|Oasis;Pop|Eagles;Urban|JAŸ-Z;Heavy Metal|Metallica;Country|Lady A;Pop|Z100's Jingle Ball;R&B|Usher Raymond & Chris Brown;Pop Rock|Harry Styles;R&B|The Spinners;Hip-Hop/Rap|Rod Wave"),
   Sports: pairs("NBA|Brooklyn Nets;NBA|Phoenix Suns;NBA|Atlanta Hawks;NBA|Golden State Warriors;NBA|Miami Heat;NBA|Charlotte Hornets;NBA|Orlando Magic;NBA|San Antonio Spurs;NBA|Portland Trail Blazers;NFL|Las Vegas Raiders"),
@@ -179,6 +180,7 @@ export const spotlights = pairs("Meet & Greets, Special Access and more|Browse A
 export const guides = pairs("NBA Basketball Tickets|See your favorite team hit the court and get tickets for the new season.;NHL Hockey Tickets|Be there live when your favorite team hits the ice.;MLS Soccer Tickets|Catch every action-packed game this season.;MLB Baseball Tickets|Answers to your questions about the 2026 MLB season, including how to get tickets.;Broadway Tickets|Browse Broadway tickets and discover upcoming shows.");
 export const discover = pairs("General Info|All In Prices Explained|Here's what you need to know about All In Prices, and why there are fees on top of the ticket price.;Ticket Tips|What to Bring to a Concert|Read our ultimate packing checklist before you go to your next show.;Sports|MLS 2026 Season FAQs|Get ready for your next match with our 2026 MLS guide.;General Info|Get the Most Out of Your Account|Learn what's possible with this guide of ticket tips and info.;Sports|A Look at the 2026 MLB Schedule and New Rules|MLB's 2026 season is bringing big schedule changes and new rules. Here's what fans need to know before first pitch.;Local Guide|6 Broadway Shows to See This Fall in NYC|Need ideas for family activities in NYC this fall? Here are the best Broadway shows and musicals to see in 2026.");
 export const cities = ["New York City", "Los Angeles", "Las Vegas", "Chicago", "Atlanta", "Nashville", "Denver", "Miami"];
+<<<<<<< HEAD
 export const featured = ["Hotels", "Ticket Deals", "VIP Packages", "Sell on TicketBubby"];
 
 export const presales = [
@@ -210,9 +212,12 @@ export const presales = [
     href: "https://www.ticketmaster.com/lil-wayne-20-years-of-carter-savannah-georgia-12-05-2026/event/0E00652A99D38572",
   },
 ];
+=======
+export const featured = ["Hotels", "Ticket Deals", "VIP Packages", "Sell on TicketBuddy"];
+>>>>>>> 7cf12a4 (Rename to TicketBuddy, link Oasis to Vercel site, Oasis first)
 export const footerCols = {
-  "Helpful Links": ["Help/FAQ", "Sell", "My Account", "Contact Us", "Gift Cards", "Do Not Sell or Share My Personal Information", "Get Started on TicketBubby"],
+  "Helpful Links": ["Help/FAQ", "Sell", "My Account", "Contact Us", "Gift Cards", "Do Not Sell or Share My Personal Information", "Get Started on TicketBuddy"],
   "Our Network": ["Venues", "Promoters", "Festivals", "Box Offices", "Universe", "NFL", "NBA", "NHL"],
-  "About Us": ["TicketBubby Blog", "Ticketing Truths", "Ad Choices", "Careers", "Ticket Your Event", "Innovation"],
+  "About Us": ["TicketBuddy Blog", "Ticketing Truths", "Ad Choices", "Careers", "Ticket Your Event", "Innovation"],
   "Friends & Partners": ["Payments", "Event Protection", "Cloud Hosting", "Affiliates"],
 };

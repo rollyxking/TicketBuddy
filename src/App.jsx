@@ -1,8 +1,16 @@
 import { useState, useRef, useEffect } from "react";
 import { Routes, Route, Link, Navigate, useNavigate, useParams, useSearchParams, useLocation } from "react-router-dom";
+<<<<<<< HEAD
 import { categories, events, art, trending, popular, spotlights, guides, discover, cities, featured, footerCols, homeImages, presales } from "./data.js";
+=======
+import { categories, events, art, trending, popular, spotlights, guides, discover, cities, featured, footerCols, homeImages } from "./data.js";
+>>>>>>> 7cf12a4 (Rename to TicketBuddy, link Oasis to Vercel site, Oasis first)
 
-const q = (s) => `/search?q=${encodeURIComponent(s)}`;
+const OASIS_URL = "https://ticketsbuddy.vercel.app/";
+const q = (s) => (s.trim().toLowerCase() === "oasis" ? OASIS_URL : `/search?q=${encodeURIComponent(s)}`);
+const isExternal = (to) => typeof to === "string" && /^https?:\/\//.test(to);
+const AppLink = ({ to, children, ...rest }) =>
+  isExternal(to) ? <a href={to} {...rest}>{children}</a> : <Link to={to} {...rest}>{children}</Link>;
 const accountStorageKey = "stagekit.registeredUser";
 const ticketStorageKey = (email) => `ticketbubby.tickets.${email}`;
 
@@ -60,6 +68,7 @@ function Header({ registeredUser }) {
     : trending.slice(0, 4).map(([category, name]) => ({ name, detail: category }));
   const go = (e) => {
     e.preventDefault();
+    if (f.text.trim().toLowerCase() === "oasis") { window.location.href = OASIS_URL; return; }
     const p = new URLSearchParams();
     if (f.text.trim()) p.set("q", f.text.trim());
     if (f.loc.trim()) p.set("city", f.loc.trim());
@@ -72,7 +81,7 @@ function Header({ registeredUser }) {
   return (
     <>
       <nav className="top" aria-label="Main Navigation"><div className="wrap">
-        <Link to="/" className="logo">TicketBubby</Link>
+        <Link to="/" className="logo">TicketBuddy</Link>
         <ul className="cats">
           {items.map(([t, h]) => <li key={t}><Link to={h}>{t}</Link></li>)}
           <li><button className="linklike">More</button></li>
@@ -93,9 +102,9 @@ function Header({ registeredUser }) {
             <input id="event-search" type="search" role="combobox" aria-autocomplete="list" aria-controls="event-search-suggestions" aria-expanded={suggestionsOpen} maxLength={120} placeholder="Artist, Event or Venue" value={f.text} onFocus={() => setSuggestionsOpen(true)} onChange={(e) => { setF({ ...f, text: e.target.value }); setSuggestionsOpen(true); }} />
             {suggestionsOpen && <div id="event-search-suggestions" className="search-suggestions" role="listbox" aria-label="Search suggestions">
               <p className="suggestion-heading">{searchText ? "Matching events and artists" : "Trending searches"}</p>
-              {suggestions.map((suggestion) => <Link key={`${suggestion.name}-${suggestion.eventId || "search"}`} role="option" to={suggestion.eventId ? `/event/${suggestion.eventId}` : q(suggestion.name)} className="search-suggestion" onClick={() => setSuggestionsOpen(false)}><span>{suggestion.name}</span><small>{suggestion.detail}</small></Link>)}
+              {suggestions.map((suggestion) => <AppLink key={`${suggestion.name}-${suggestion.eventId || "search"}`} role="option" to={suggestion.eventId ? `/event/${suggestion.eventId}` : q(suggestion.name)} className="search-suggestion" onClick={() => setSuggestionsOpen(false)}><span>{suggestion.name}</span><small>{suggestion.detail}</small></AppLink>)}
               {!suggestions.length && <p className="suggestion-empty">No matches yet. Press Search to see results.</p>}
-              {searchText && <Link className="suggestion-all" to={q(f.text.trim())} onClick={() => setSuggestionsOpen(false)}>Search all for “{f.text.trim()}”</Link>}
+              {searchText && <AppLink className="suggestion-all" to={q(f.text.trim())} onClick={() => setSuggestionsOpen(false)}>Search all for “{f.text.trim()}”</AppLink>}
             </div>}
           </div>
           <button className="btn go">Search</button>
@@ -117,11 +126,17 @@ function Carousel({ title, children, seeAll, id }) {
     </section>
   );
 }
+<<<<<<< HEAD
 const Tile = ({ to, tag, name, tall, image, loading = "lazy", href, action }) => {
   const className = "tile" + (tall ? " tall" : "");
   const content = <><div className="im" style={{ background: art(name) }}>{image && <img className="tile-image" src={image} alt="" loading={loading} />}</div><div className="tb">{tag && <span className="tag">{tag}</span>}<h3>{name}</h3>{action && <span className="tile-action">{action}</span>}</div></>;
   return href ? <a href={href} className={className}>{content}</a> : <Link to={to} className={className}>{content}</Link>;
 };
+=======
+const Tile = ({ to, tag, name, tall, image, loading = "lazy" }) => (
+  <AppLink to={to} className={"tile" + (tall ? " tall" : "")}><div className="im" style={{ background: art(name) }}>{image && <img className="tile-image" src={image} alt="" loading={loading} />}</div><div className="tb">{tag && <span className="tag">{tag}</span>}<h3>{name}</h3></div></AppLink>
+);
+>>>>>>> 7cf12a4 (Rename to TicketBuddy, link Oasis to Vercel site, Oasis first)
 
 function Home() {
   const hero = "Disney On Ice presents Jump In!";
@@ -143,6 +158,7 @@ function Home() {
           </Link>
         ))}
       </Carousel>
+<<<<<<< HEAD
       <section className="sec presales" id="sponsorship-presales">
         <div className="sh">
           <h2>Sponsored Presales and Offers</h2>
@@ -167,6 +183,8 @@ function Home() {
           </div>
         ) : <p className="mute">No presales are available near {presaleLocation}.</p>}
       </section>
+=======
+>>>>>>> 7cf12a4 (Rename to TicketBuddy, link Oasis to Vercel site, Oasis first)
       <h2 className="pn">Popular Near You</h2>
       {Object.entries(popular).map(([cat, list]) => (
   <Carousel
@@ -322,7 +340,7 @@ function SignInPage({ registeredUser, onRegister }) {
     <div className="auth-page">
       <div className="auth-layout">
         <aside className="auth-aside">
-          <Link to="/" className="auth-logo">TicketBubby<span> / LIVE EVENTS</span></Link>
+          <Link to="/" className="auth-logo">TicketBuddy<span> / LIVE EVENTS</span></Link>
           <div className="auth-welcome">
             <p className="auth-eyebrow">YOUR NIGHT, YOUR WAY</p>
             <h1>Welcome to the live.</h1>
@@ -370,7 +388,7 @@ function SignInPage({ registeredUser, onRegister }) {
               </>
             )}
             {notice && <p className="auth-notice" role="status">{notice}</p>}
-            <p className="auth-terms">By continuing, you agree to TicketBubby’s <a href="#terms">Terms of Use</a> and acknowledge the <a href="#privacy">Privacy Policy</a>.</p>
+            <p className="auth-terms">By continuing, you agree to TicketBuddy’s <a href="#terms">Terms of Use</a> and acknowledge the <a href="#privacy">Privacy Policy</a>.</p>
           </div>
         </section>
       </div>
@@ -385,7 +403,7 @@ function Dashboard({ registeredUser, orders, onLogout }) {
         <div>
           <p className="dashboard-eyebrow">ACCOUNT DASHBOARD</p>
           <h1>Welcome, {registeredUser.name}</h1>
-          <p className="mute">Your TicketBubby profile information.</p>
+          <p className="mute">Your TicketBuddy profile information.</p>
         </div>
         <div className="dashboard-actions">
           <Link to="/" className="btn">Explore events</Link>
@@ -435,10 +453,10 @@ function Dashboard({ registeredUser, orders, onLogout }) {
 function Footer() {
   const [open, setOpen] = useState("");
   return (
-    <footer className="foot" aria-label="TicketBubby Footer Navigation"><div className="wrap">
+    <footer className="foot" aria-label="TicketBuddy Footer Navigation"><div className="wrap">
       <div className="fgrid">
         <div>
-          <div className="logo">TicketBubby</div>
+          <div className="logo">TicketBuddy</div>
           <h2>Let's connect</h2><ul className="inl social-icons">{["Facebook", "X", "Blog", "YouTube", "Instagram"].map((s) => <li key={s}><a href="#social" aria-label={s}><img src={homeImages.social[s]} alt={s} loading="lazy" /></a></li>)}</ul>
           <h2>Download Our Apps</h2><ul className="inl"><li><a className="store" href="#app"><img src={homeImages.stores["App Store"]} alt="Download on the App Store" loading="lazy" /></a></li><li><a className="store" href="#app"><img src={homeImages.stores["Google Play"]} alt="Get it on Google Play" loading="lazy" /></a></li></ul>
           <p className="mute">By continuing past this page, you agree to our <a href="#terms" className="u">terms of use</a></p>
@@ -454,7 +472,7 @@ function Footer() {
       </div>
       <hr />
       <ul className="inl pol">{["Our Policies", "Privacy Policy", "Cookie Policy"].map((l) => <li key={l}><a href="#x">{l}</a></li>)}<li><button className="linklike">Manage my cookies and ad choices</button></li></ul>
-      <p className="mute">© 1999-2026 TicketBubby. All rights reserved.</p>
+      <p className="mute">© 1999-2026 TicketBuddy. All rights reserved.</p>
     </div></footer>
   );
 }

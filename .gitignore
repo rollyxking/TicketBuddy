@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿node_modules/
 dist/
 .env
 .env.local
+=======
+node_modules
+>>>>>>> 7cf12a4 (Rename to TicketBuddy, link Oasis to Vercel site, Oasis first)

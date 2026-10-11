@@ -1,4 +1,4 @@
-# TicketBubby
+# TicketBuddy
 
 React + Vite + React Router event-ticketing frontend (demo data only).
 
