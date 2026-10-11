@@ -180,8 +180,7 @@ export const spotlights = pairs("Meet & Greets, Special Access and more|Browse A
 export const guides = pairs("NBA Basketball Tickets|See your favorite team hit the court and get tickets for the new season.;NHL Hockey Tickets|Be there live when your favorite team hits the ice.;MLS Soccer Tickets|Catch every action-packed game this season.;MLB Baseball Tickets|Answers to your questions about the 2026 MLB season, including how to get tickets.;Broadway Tickets|Browse Broadway tickets and discover upcoming shows.");
 export const discover = pairs("General Info|All In Prices Explained|Here's what you need to know about All In Prices, and why there are fees on top of the ticket price.;Ticket Tips|What to Bring to a Concert|Read our ultimate packing checklist before you go to your next show.;Sports|MLS 2026 Season FAQs|Get ready for your next match with our 2026 MLS guide.;General Info|Get the Most Out of Your Account|Learn what's possible with this guide of ticket tips and info.;Sports|A Look at the 2026 MLB Schedule and New Rules|MLB's 2026 season is bringing big schedule changes and new rules. Here's what fans need to know before first pitch.;Local Guide|6 Broadway Shows to See This Fall in NYC|Need ideas for family activities in NYC this fall? Here are the best Broadway shows and musicals to see in 2026.");
 export const cities = ["New York City", "Los Angeles", "Las Vegas", "Chicago", "Atlanta", "Nashville", "Denver", "Miami"];
-<<<<<<< HEAD
-export const featured = ["Hotels", "Ticket Deals", "VIP Packages", "Sell on TicketBubby"];
+export const featured = ["Hotels", "Ticket Deals", "VIP Packages", "Sell on TicketBuddy"];
 
 export const presales = [
   {
@@ -212,9 +211,6 @@ export const presales = [
     href: "https://www.ticketmaster.com/lil-wayne-20-years-of-carter-savannah-georgia-12-05-2026/event/0E00652A99D38572",
   },
 ];
-=======
-export const featured = ["Hotels", "Ticket Deals", "VIP Packages", "Sell on TicketBuddy"];
->>>>>>> 7cf12a4 (Rename to TicketBuddy, link Oasis to Vercel site, Oasis first)
 export const footerCols = {
   "Helpful Links": ["Help/FAQ", "Sell", "My Account", "Contact Us", "Gift Cards", "Do Not Sell or Share My Personal Information", "Get Started on TicketBuddy"],
   "Our Network": ["Venues", "Promoters", "Festivals", "Box Offices", "Universe", "NFL", "NBA", "NHL"],
